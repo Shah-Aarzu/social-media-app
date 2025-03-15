@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
 import { User } from "../Models/User.model.js";
@@ -30,7 +30,7 @@ export const createUser = async (req, res) => {
       imageUrl = await cloudinary.uploader.upload(req.file.path);
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
     const newUser = new User({
       profile: imageUrl != "" ? imageUrl.secure_url : "",
@@ -104,7 +104,7 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ username });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcryptjs.compare(password, user.password))) {
       return res.json({ message: "Invalid credentials", auth: false, token });
     }
 

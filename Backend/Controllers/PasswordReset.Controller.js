@@ -2,7 +2,7 @@ import { OTP } from "../Models/Otp.model.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { User } from "../Models/User.model.js";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -77,7 +77,7 @@ export const resetPassword = async (req, res) => {
     if (!record)
       return res.json({ message: "Invalid or expired OTP" }).status(400);
 
-    const hashedPassword = await bcrypt.hash(confirmNewPassword, 10);
+    const hashedPassword = await bcryptjs.hash(confirmNewPassword, 10);
     await User.findOneAndUpdate({ email }, { password: hashedPassword });
 
     await OTP.deleteOne({ email, otp });
