@@ -10,7 +10,7 @@ export const getAllComments = createAsyncThunk(
   async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/posts/comments",
+        "https://social-media-app-yog9.onrender.com/api/posts/comments",
         data
       );
 

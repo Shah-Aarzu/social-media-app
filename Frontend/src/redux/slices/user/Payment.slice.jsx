@@ -5,7 +5,7 @@ import { errorNotification } from "../../../utils/Notifications";
 export const payment = createAsyncThunk("payment", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/payment",
+      "https://social-media-app-yog9.onrender.com/api/users/payment",
       data
     );
     return res;
@@ -19,7 +19,7 @@ export const stripeSessionId = createAsyncThunk(
   async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/users/stripe",
+        "https://social-media-app-yog9.onrender.com/api/users/stripe",
         data
       );
       return res;

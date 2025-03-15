@@ -8,7 +8,7 @@ import {
 export const getFollowers = createAsyncThunk("getFollowers", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/getFollowers",
+      "https://social-media-app-yog9.onrender.com/api/users/getFollowers",
       data
     );
 
@@ -21,7 +21,7 @@ export const getFollowers = createAsyncThunk("getFollowers", async (data) => {
 export const getFollowing = createAsyncThunk("getFollowing", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/getFollowing",
+      "https://social-media-app-yog9.onrender.com/api/users/getFollowing",
       data
     );
 
@@ -34,7 +34,7 @@ export const getFollowing = createAsyncThunk("getFollowing", async (data) => {
 export const getLikes = createAsyncThunk("getLikes", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/getLikes",
+      "https://social-media-app-yog9.onrender.com/api/users/getLikes",
       data
     );
 

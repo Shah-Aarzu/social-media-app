@@ -5,7 +5,7 @@ import { errorNotification } from "../../../utils/Notifications";
 export const getMessages = createAsyncThunk("getMessages", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/getMessages",
+      "https://social-media-app-yog9.onrender.com/api/users/getMessages",
       data
     );
 
@@ -18,7 +18,7 @@ export const getMessages = createAsyncThunk("getMessages", async (data) => {
 export const setMessages = createAsyncThunk("setMessages", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/setMessages",
+      "https://social-media-app-yog9.onrender.com/api/users/setMessages",
       data
     );
 

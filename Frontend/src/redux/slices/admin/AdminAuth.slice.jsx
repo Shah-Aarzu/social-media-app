@@ -5,7 +5,7 @@ import { errorNotification } from "../../../utils/Notifications";
 export const adminAuth = createAsyncThunk("adminAuth", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/admin/adminLogin",
+      "https://social-media-app-yog9.onrender.com/api/admin/adminLogin",
       data
     );
     return res;

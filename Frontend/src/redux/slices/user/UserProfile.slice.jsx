@@ -10,7 +10,7 @@ export const getUserProfile = createAsyncThunk(
   async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/users/userProfile",
+        "https://social-media-app-yog9.onrender.com/api/users/userProfile",
         data
       );
 

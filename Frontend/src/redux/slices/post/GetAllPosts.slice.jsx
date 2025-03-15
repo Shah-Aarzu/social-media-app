@@ -8,7 +8,7 @@ import {
 export const getAllPosts = createAsyncThunk("getAllPosts", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/posts/getAllPosts",
+      "https://social-media-app-yog9.onrender.com/api/posts/getAllPosts",
       data
     );
 

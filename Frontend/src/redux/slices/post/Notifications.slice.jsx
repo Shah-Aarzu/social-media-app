@@ -10,7 +10,7 @@ export const getAllnotifications = createAsyncThunk(
   async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/posts/notifications",
+        "https://social-media-app-yog9.onrender.com/api/posts/notifications",
         data
       );
 

@@ -8,7 +8,7 @@ import {
 export const postData = createAsyncThunk("postData", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/posts/createPost",
+      "https://social-media-app-yog9.onrender.com/api/posts/createPost",
       data
     );
     return res;
@@ -20,7 +20,7 @@ export const postData = createAsyncThunk("postData", async (data) => {
 export const getData = createAsyncThunk("getData", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/posts/getPost",
+      "https://social-media-app-yog9.onrender.com/api/posts/getPost",
       data
     );
     return res;
@@ -31,7 +31,7 @@ export const getData = createAsyncThunk("getData", async (data) => {
 
 export const like = createAsyncThunk("like", async (data) => {
   try {
-    const res = await axios.post("http://localhost:3000/api/posts/like", data);
+    const res = await axios.post("https://social-media-app-yog9.onrender.com/api/posts/like", data);
 
     return res;
   } catch (error) {
@@ -42,7 +42,7 @@ export const like = createAsyncThunk("like", async (data) => {
 export const removePost = createAsyncThunk("removePost", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/posts/removePost",
+      "https://social-media-app-yog9.onrender.com/api/posts/removePost",
       data
     );
 

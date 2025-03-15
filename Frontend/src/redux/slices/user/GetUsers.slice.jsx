@@ -8,7 +8,7 @@ import {
 export const getUsers = createAsyncThunk("getUsers", async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/users/getUsers",
+      "https://social-media-app-yog9.onrender.com/api/users/getUsers",
       data
     );
 
