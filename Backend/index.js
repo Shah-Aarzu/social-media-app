@@ -42,7 +42,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: 'https://mellow-gumdrop-7e81ed.netlify.app',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
 
 app.use("/api/admin", adminRouter);
 app.use("/api/users", userRouter);
