@@ -5,7 +5,7 @@ import cors from "cors";
 import adminRouter from "./Routes/Admin.route.js";
 import userRouter from "./Routes/User.route.js";
 import postRouter from "./Routes/Post.route.js";
-import "dotenv/config";
+import dotenv from "dotenv"
 import { connectDB } from "./DB/index.js";
 import Stripe from "stripe";
 import { createServer } from "http";
@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {});
 });
 
+dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
