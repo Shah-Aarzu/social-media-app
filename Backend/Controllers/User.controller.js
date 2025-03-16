@@ -489,8 +489,8 @@ export const stripe = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:5173/user/subscription?success=true`,
-      cancel_url: `http://localhost:5173/user/subscription?canceled=true`,
+      success_url: `https://social-media-app-yog9.onrender.com/user/subscription?success=true`,
+      cancel_url: `https://social-media-app-yog9.onrender.com/user/subscription?canceled=true`,
     });
 
     res.json({ id: session.id });
