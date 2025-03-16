@@ -19,7 +19,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const server = createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://mellow-gumdrop-7e81ed.netlify.app",
   },
 });
 
