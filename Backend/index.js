@@ -11,8 +11,6 @@ import Stripe from "stripe";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-connectDB();
-
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -55,4 +53,5 @@ app.use("/api/posts", postRouter);
 
 server.listen(process.env.PORT || 3000, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
+  connectDB();
 });
