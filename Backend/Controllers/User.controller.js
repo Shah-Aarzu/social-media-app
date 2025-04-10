@@ -524,8 +524,8 @@ export const stripe = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:5173/user/subscription?success=true`,
-      cancel_url: `http://localhost:5173/user/subscription?canceled=true`,
+      success_url: `https://social-media-app-sam.netlify.app/user/subscription?success=true`,
+      cancel_url: `https://social-media-app-sam.netlify.app/user/subscription?canceled=true`,
     });
 
     res.json({ id: session.id });
