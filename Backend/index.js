@@ -86,7 +86,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://social-media-app-sam.netlify.app/',
+  origin: 'https://social-media-app-sam.netlify.app',
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
 }));
