@@ -18,7 +18,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const server = createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: "https://mellow-gumdrop-7e81ed.netlify.app",
+    origin: "https://social-media-app-sam.netlify.app",
   },
 });
 
@@ -86,7 +86,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://mellow-gumdrop-7e81ed.netlify.app',
+  origin: 'https://social-media-app-sam.netlify.app/',
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
 }));
