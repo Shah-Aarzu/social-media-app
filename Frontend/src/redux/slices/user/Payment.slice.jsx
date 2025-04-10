@@ -45,7 +45,7 @@ export const PaymentSlice = createSlice({
       })
       .addCase(payment.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload.data ? action.payload.data : null;
+        state.data = action.payload.data;
       })
       .addCase(payment.rejected, (state, action) => {
         state.status = "failed";

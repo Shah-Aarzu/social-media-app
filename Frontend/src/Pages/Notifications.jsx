@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getAllnotifications } from "../redux/slices/post/Notifications.slice";
 import emptyProfile from "../utils/Image/empty-profile.avif";
+import { useNavigate } from "react-router-dom";
 
 const Notifications = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllnotifications({ token: localStorage.getItem("userToken") }));
@@ -35,7 +37,12 @@ const Notifications = () => {
                 return (
                   <div key={notification._id}>
                     {notification.follow && (
-                      <div className="flex justify-between px-3 py-1 bg-gray-100 bg-opacity-25 items-center gap-1 rounded-lg border border-gray-100 my-3">
+                      <div
+                        onClick={() => {
+                          navigate(`/user/${notification.username}`);
+                        }}
+                        className=" hover:cursor-pointer flex justify-between px-3 py-1 bg-gray-100 bg-opacity-25 items-center gap-1 rounded-lg border border-gray-100 my-3"
+                      >
                         <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
                             <img
@@ -73,7 +80,10 @@ const Notifications = () => {
                     {notification.comment && (
                       <div
                         key={notification._id}
-                        className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3"
+                        onClick={() => {
+                          navigate(`/user/${notification.username}`);
+                        }}
+                        className=" hover:cursor-pointer flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3"
                       >
                         <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
@@ -116,7 +126,10 @@ const Notifications = () => {
                     {notification.like && (
                       <div
                         key={notification._id}
-                        className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3"
+                        onClick={() => {
+                          navigate(`/user/${notification.username}`);
+                        }}
+                        className=" hover:cursor-pointer flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3"
                       >
                         <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">

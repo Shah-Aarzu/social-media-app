@@ -7,6 +7,7 @@ import moment from "moment-timezone";
 import mongoose from "mongoose";
 import Stripe from "stripe";
 import { io, getReceiverSocketId } from "../index.js";
+import { Socket } from "socket.io";
 
 export const createUser = async (req, res) => {
   try {
@@ -181,7 +182,7 @@ export const getUsers = async (req, res) => {
   try {
     console.log("getUsers");
     const { search } = req.body;
-    let users;
+    let users = [];
     if (search === "allUsers") {
       users = await User.find(
         {},
@@ -194,15 +195,17 @@ export const getUsers = async (req, res) => {
       return res.json({ message: "Users Fetched Successfully", users });
     }
 
-    users = await User.find(
-      {
-        $or: [
-          { fullname: { $regex: ".*" + search + ".*", $options: "i" } },
-          { username: { $regex: ".*" + search + ".*", $options: "i" } },
-        ],
-      },
-      { fullname: 1, username: 1, profile: 1 }
-    );
+    if (search) {
+      users = await User.find(
+        {
+          $or: [
+            { fullname: { $regex: ".*" + search + ".*", $options: "i" } },
+            { username: { $regex: ".*" + search + ".*", $options: "i" } },
+          ],
+        },
+        { fullname: 1, username: 1, profile: 1 }
+      );
+    }
     if (users.length > 0)
       return res.json({ message: "User Fetched Successfully", users });
     res.json({ message: "User Not Found", users });
@@ -412,12 +415,15 @@ export const setMessages = async (req, res) => {
     const { id } = req;
     const { username, message, receiverId } = req.body;
 
+
     const myDetail = await User.findOne({ _id: id });
     const userDetail = await User.findOne({ username });
 
     const createdAt = moment(Date.now())
       .tz("Asia/Kolkata")
       .format("HH:mm:ss DD-MM-YYYY");
+
+    const _id = new mongoose.Types.ObjectId();
 
     await User.updateOne(
       {
@@ -430,6 +436,7 @@ export const setMessages = async (req, res) => {
             username,
             message,
             createdAt,
+            _id,
           },
         },
       }
@@ -445,25 +452,53 @@ export const setMessages = async (req, res) => {
             username,
             message,
             createdAt,
+            _id,
           },
         },
       }
     );
 
-    const receiverNewMessage = { username, message, createdAt };
-    const senderNewMessage = { username, message, createdAt };
+    const receiverNewMessage = { username, message, createdAt, _id };
+    const senderNewMessage = { username, message, createdAt, _id };
 
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newMessage", receiverNewMessage);
+      io.to(receiverSocketId).emit("newMessage", { newMessage: receiverNewMessage, id: id + "" });
     }
 
     const senderSocketId = getReceiverSocketId(id);
     if (senderSocketId) {
-      io.to(senderSocketId).emit("newMessage", senderNewMessage);
+      io.to(senderSocketId).emit("newMessage", { newMessage: senderNewMessage, id: receiverId });
     }
 
     res.status(200).json({ message: "Messages Send Successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const deleteMessage = async (req, res) => {
+  try {
+    console.log("deleteMessage");
+
+    const { id } = req;
+    const { _id, username } = req.body;
+    const messageId = new mongoose.Types.ObjectId(_id);
+    console.log(username);
+
+    await User.updateOne(
+      {
+        _id: id,
+        messages: { $elemMatch: { username } },
+      },
+      {
+        $pull: {
+          "messages.$.chats": { _id: messageId },
+        },
+      }
+    );
+
+    res.status(200).json({ message: "Messages Deleted Successfully" });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
@@ -489,8 +524,8 @@ export const stripe = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `https://mellow-gumdrop-7e81ed.netlify.app/user/subscription?success=true`,
-      cancel_url: `https://mellow-gumdrop-7e81ed.netlify.app/user/subscription?canceled=true`,
+      success_url: `http://localhost:5173/user/subscription?success=true`,
+      cancel_url: `http://localhost:5173/user/subscription?canceled=true`,
     });
 
     res.json({ id: session.id });

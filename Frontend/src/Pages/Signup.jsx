@@ -78,12 +78,11 @@ const Signup = () => {
     <>
       <ToastContainer transition={Slide} />
       <section
-        className="min-h-screen overflow-y-auto py-20 bg-gray-50 dark:bg-gray-900"
+        className="min-h-screen overflow-y-auto py-20 md:pt-40 bg-gray-50 dark:bg-gray-900"
         style={{
           backgroundImage: `url(${background})`,
           backgroundSize: "cover",
-          height: "100vh",
-          width: "100%",
+          backgroundPosition: "top",
         }}
       >
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

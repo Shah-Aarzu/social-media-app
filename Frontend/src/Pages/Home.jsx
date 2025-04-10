@@ -44,8 +44,8 @@ const Home = () => {
                 {likePopUpToggle && (
                   <LikesPopUpBox setLikePopUpToggle={setLikePopUpToggle} />
                 )}
-                <div className="min-h-screen bg-gray-100 bg-opacity-25 flex items-center justify-center">
-                  <ul className=" grid gap-5 py-5">
+                <div className="min-h-screen overflow-auto bg-gray-300 bg-opacity-25 flex items-center justify-center">
+                  <ul className=" grid gap-5 p-5">
                     {posts.posts.map((post) => {
                       return (
                         <li key={post._id}>
@@ -59,10 +59,18 @@ const Home = () => {
                                       : emptyProfile
                                   }
                                   alt="User Avatar"
-                                  className=" w-12 h-12 rounded-full"
+                                  className=" w-12 h-12 rounded-full hover:cursor-pointer"
+                                  onClick={() => {
+                                    navigate(`/user/${post.author.username}`);
+                                  }}
                                 />
                                 <div>
-                                  <p className="text-gray-800 font-semibold">
+                                  <p
+                                    className="text-gray-800 font-semibold hover:cursor-pointer"
+                                    onClick={() => {
+                                      navigate(`/user/${post.author.username}`);
+                                    }}
+                                  >
                                     {post.author.username}
                                   </p>
                                   <p className="text-gray-500 text-sm">
@@ -95,7 +103,7 @@ const Home = () => {
                                 <img
                                   src={post.image}
                                   alt="Post Image"
-                                  className="w-full h-96 object-cover rounded-md"
+                                  className="w-full h-40 sm:h-80 object-cover rounded-md"
                                 />
                               </div>
                             )}

@@ -51,7 +51,7 @@ const Search = () => {
                   return (
                     <div
                       key={user._id}
-                      className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3"
+                      className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-300 my-3"
                     >
                       <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">

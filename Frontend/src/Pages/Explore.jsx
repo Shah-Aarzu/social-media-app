@@ -29,14 +29,17 @@ const Explore = () => {
       {posts.status == "succeeded" && (
         <>
           {posts.posts.length > 0 ? (
-            <main className="w-full bg-gray-100 bg-opacity-25 py-5">
+            <main className="w-full h-screen bg-gray-100 bg-opacity-25 py-5">
               <div className="lg:w-8/12 lg:mx-auto mb-8">
                 <div className="px-px md:px-3">
                   <div className="flex flex-wrap -mx-px md:-mx-3">
                     {posts.posts.map((post) => {
                       return (
                         post.image && (
-                          <div key={post._id} className="w-1/3 p-px md:px-3">
+                          <div
+                            key={post._id}
+                            className=" w-full md:w-1/3 sm:w-2/4 p-px md:px-3"
+                          >
                             <a href="#">
                               <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
                                 <img

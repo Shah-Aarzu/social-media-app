@@ -28,6 +28,19 @@ export const setMessages = createAsyncThunk("setMessages", async (data) => {
   }
 });
 
+export const deleteMessage = createAsyncThunk("deleteMessage", async (data) => {
+  try {
+    const res = await axios.post(
+      "https://social-media-app-yog9.onrender.com/api/users/deleteMessage",
+      data
+    );
+
+    return res;
+  } catch (error) {
+    errorNotification(error.message);
+  }
+});
+
 export const MessagesSlice = createSlice({
   name: "Messages",
 
@@ -44,7 +57,7 @@ export const MessagesSlice = createSlice({
       })
       .addCase(getMessages.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.messages = action.payload.data ? action.payload.data : null;
+        state.messages = action.payload.data;
       })
       .addCase(getMessages.rejected, (state, action) => {
         state.status = "failed";

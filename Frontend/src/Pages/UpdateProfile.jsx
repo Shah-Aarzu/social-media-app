@@ -23,12 +23,13 @@ const UpdateProfile = () => {
     email: "",
     bio: "",
   });
+
   useEffect(() => {
     dispatch(userDetail({ token: localStorage.getItem("userToken") }));
   }, []);
 
   useEffect(() => {
-    if (profileData.status == "succeeded") {
+    if (profileData.status == "succeeded" && profileData.userData.userData) {
       setUser({
         profile: null,
         fullname: profileData.userData.userData.fullname,
@@ -36,6 +37,7 @@ const UpdateProfile = () => {
         email: profileData.userData.userData.email,
         bio: profileData.userData.userData.bio,
       });
+
       return;
     }
   }, [profileData.status == "succeeded"]);
@@ -130,13 +132,7 @@ const UpdateProfile = () => {
                     placeholder="Name Surname"
                     required
                     onChange={userHandler}
-                    value={
-                      user.fullname !== ""
-                        ? user.fullname
-                        : profileData.status === "succeeded"
-                        ? profileData.userData.userData.fullname
-                        : user.fullname
-                    }
+                    value={user.fullname}
                   />
                 </div>
 
@@ -156,13 +152,7 @@ const UpdateProfile = () => {
                     required
                     onChange={userHandler}
                     readOnly
-                    value={
-                      user.username !== ""
-                        ? user.username
-                        : profileData.status === "succeeded"
-                        ? profileData.userData.userData.username
-                        : user.username
-                    }
+                    value={user.username}
                   />
                 </div>
                 <div>
@@ -181,13 +171,7 @@ const UpdateProfile = () => {
                     required
                     onChange={userHandler}
                     readOnly
-                    value={
-                      user.email !== ""
-                        ? user.email
-                        : profileData.status === "succeeded"
-                        ? profileData.userData.userData.email
-                        : user.email
-                    }
+                    value={user.email}
                   />
                 </div>
 
@@ -205,13 +189,7 @@ const UpdateProfile = () => {
                     placeholder="bio"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={userHandler}
-                    value={
-                      user.bio !== ""
-                        ? user.bio
-                        : profileData.status === "succeeded"
-                        ? profileData.userData.userData.bio
-                        : user.bio
-                    }
+                    value={user.bio}
                   />
                 </div>
                 <button

@@ -2,7 +2,7 @@ import { OTP } from "../Models/Otp.model.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { User } from "../Models/User.model.js";
-import bcryptjs from "bcryptjs";
+import bcryptjs from "bcryptjs"
 import dotenv from "dotenv";
 dotenv.config();
 

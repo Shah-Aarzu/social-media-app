@@ -33,7 +33,7 @@ export const notificationsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllnotifications.pending, (state) => {
-        state.status = "loading";
+        if (state.notifications.length == 0) state.status = "loading";
       })
       .addCase(getAllnotifications.fulfilled, (state, action) => {
         state.notifications = action.payload.data.notifications;

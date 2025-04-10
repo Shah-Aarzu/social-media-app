@@ -12,13 +12,15 @@ const AppUser = () => {
     localStorage.getItem("userId");
 
   useEffect(() => {
-    if (userId && localStorage.getItem("userToken") && !window.socket) {
+    if (userId && localStorage.getItem("userToken") 
+      // && !window.socket
+    ) {
       const socket = io("http://localhost:3000", {
         query: { userId },
       });
 
       dispatch(setSocket(socket));
-      window.socket = socket;
+      //window.socket = socket;
 
       localStorage.setItem("userId", userId);
     }

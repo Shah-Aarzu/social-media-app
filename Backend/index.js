@@ -11,6 +11,7 @@ import Stripe from "stripe";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
+
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -29,11 +30,54 @@ const users = {};
 
 io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
+
   if (userId) {
     users[userId] = socket.id;
-  }
+    io.emit("userisOnline", { flag: true, id: userId });
 
-  socket.on("disconnect", () => {});
+  }
+  let user;
+  socket.on("isUserOnline", (chatId) => {
+    if (chatId) {
+      user = getReceiverSocketId(chatId);
+    }
+    if (user) socket.emit("userisOnline", { flag: true, id: chatId });
+    else socket.emit("userisOnline", { flag: false, id: chatId });
+  });
+
+  socket.on("userisTyping", (chatId) => {
+    if (chatId) {
+      user = getReceiverSocketId(chatId);
+
+    }
+
+    if (user) {
+      socket.to(user).emit("userTyping", { flag: true, userId });
+    }
+  });
+
+
+
+  socket.on("stopTyping", async (chatId) => {
+    if (chatId) {
+      user = getReceiverSocketId(chatId);
+
+    }
+
+    if (user) {
+      socket.to(user).emit("hideTyping", { flag: false, userId });
+    }
+  });
+
+  socket.on("getDeleteMessageId", ({ messageId }) => {
+
+    socket.emit("sendDeleteMessageId", { messageId });
+  });
+
+  socket.on("disconnect", () => {
+    delete users[userId];
+    io.emit("userisOnline", { flag: false, id: userId });
+  });
 });
 
 dotenv.config();
@@ -51,7 +95,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 
-server.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
   connectDB();
 });

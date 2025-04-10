@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllComments } from "../redux/slices/post/Comments.slice";
 import { ToastContainer, Slide } from "react-toastify";
 import { successNotification, errorNotification } from "../utils/Notifications";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import emptyProfile from "../utils/Image/empty-profile.avif";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ import { faPlus, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 const Comments = () => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { postId } = useParams();
   const bottomRef = useRef();
 
@@ -79,21 +80,29 @@ const Comments = () => {
                     <div key={index}>
                       <div
                         key={comment.commentId}
-                        className="flex flex-col gap-5 m-3 "
+                        className="flex flex-col gap-5 m-3"
                       >
                         <div>
                           <div className="flex w-full justify-between border rounded-md">
                             <div className="p-3">
                               <div className="flex gap-3 items-center">
                                 <img
+                                  onClick={() => {
+                                    navigate(`/user/${comment.username}`);
+                                  }}
                                   src={
                                     comment.profile != ""
                                       ? comment.profile
                                       : emptyProfile
                                   }
-                                  className="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400"
+                                  className="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400 hover:cursor-pointer"
                                 />
-                                <h3 className="font-bold">
+                                <h3
+                                  className="font-bold hover:cursor-pointer"
+                                  onClick={() => {
+                                    navigate(`/user/${comment.username}`);
+                                  }}
+                                >
                                   {comment.username}
                                 </h3>
                               </div>

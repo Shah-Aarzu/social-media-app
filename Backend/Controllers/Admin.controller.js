@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import bcryptjs from "bcryptjs";
 import { Admin } from "../Models/Admin.model.js";
 
 export const loginAdmin = async (req, res) => {

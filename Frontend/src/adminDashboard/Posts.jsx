@@ -39,7 +39,7 @@ const Home = () => {
           {posts.posts.length > 0 ? (
             <>
               <section>
-                <div className="bg-gray-100 bg-opacity-25 flex items-center justify-center min-h-screen w-full">
+                <div className="p-5 bg-gray-100 bg-opacity-25 flex items-center justify-center min-h-screen w-full">
                   <ul className=" grid gap-5 py-5">
                     <div className="bg-white p-8 rounded-lg shadow-md max-w-md text-center">
                       <p className=" text-gray-800 font-semibold">
@@ -129,7 +129,7 @@ const Home = () => {
                                 <img
                                   src={post.image}
                                   alt="Post Image"
-                                  className="w-full h-96 object-cover rounded-md"
+                                  className="w-full h-40 sm:h-80 object-cover rounded-md"
                                 />
                               </div>
                             )}

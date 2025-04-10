@@ -37,7 +37,7 @@ export const UserProfileSlice = createSlice({
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.userProfile = action.payload.data ? action.payload.data : null;
+        state.userProfile = action.payload.data;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.status = "failed";

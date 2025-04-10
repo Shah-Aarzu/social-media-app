@@ -2,8 +2,10 @@ import { ImCross } from "react-icons/im";
 import { useSelector } from "react-redux";
 import emptyProfile from "../utils/Image/empty-profile.avif";
 import bluetick from "../utils/Image/verify.png";
+import { useNavigate } from "react-router-dom";
 
 function LikesPopUpBox({ setLikePopUpToggle }) {
+  const navigate = useNavigate();
   const likes = useSelector((state) => state.userUtility);
 
   const submitHandler = () => {
@@ -34,12 +36,12 @@ function LikesPopUpBox({ setLikePopUpToggle }) {
           }}
         >
           {likes.status == "loading" && (
-            <div className="h-full w-96 flex justify-center items-center text-white">
+            <div className="h-full w-80 flex justify-center items-center text-white">
               Loading...
             </div>
           )}
           {likes.status == "failed" && (
-            <div className="h-full w-96 flex justify-center items-center text-white">
+            <div className="h-full w-80 flex justify-center items-center text-white">
               Check Your Internet Connection !!!
             </div>
           )}
@@ -47,7 +49,10 @@ function LikesPopUpBox({ setLikePopUpToggle }) {
             likes.userUtilityData.map((like, index) => (
               <div
                 key={index}
-                className="flex justify-between px-3 py-1 bg-gray-100 items-center gap-1 rounded-lg border border-gray-100 my-3"
+                onClick={() => {
+                  navigate(`/user/${like.username}`);
+                }}
+                className=" hover:cursor-pointer flex w-80 justify-between px-3 py-1 bg-gray-100 items-center gap-1 rounded-lg border border-gray-100 my-3"
               >
                 <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
@@ -67,9 +72,11 @@ function LikesPopUpBox({ setLikePopUpToggle }) {
                       )}
                     </span>
                   </p>
-                  <p>{like.fullname ? like.fullname : ""}</p>
                 </div>
                 <div>
+                  <p>{like.fullname ? like.fullname : ""}</p>
+                </div>
+                {/* <div>
                   <input
                     type="button"
                     value="Follow"
@@ -77,11 +84,11 @@ function LikesPopUpBox({ setLikePopUpToggle }) {
                             text-white font-semibold text-sm rounded block text-center 
                             sm:inline-block"
                   />
-                </div>
+                </div> */}
               </div>
             ))
           ) : (
-            <div className="h-full w-96 flex justify-center items-center text-white">
+            <div className="h-full w-80 flex justify-center items-center text-white">
               No Likes !!
             </div>
           )}

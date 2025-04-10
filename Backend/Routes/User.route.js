@@ -18,6 +18,7 @@ import {
   getFollowers,
   getFollowing,
   getLikes,
+  deleteMessage,
 } from "../Controllers/User.controller.js";
 import {
   otpGenerator,
@@ -45,6 +46,7 @@ route.post("/payment", authMiddleware, payment);
 route.post("/getFollowers", authMiddleware, getFollowers);
 route.post("/getFollowing", authMiddleware, getFollowing);
 route.post("/getLikes", authMiddleware, getLikes);
+route.post("/deleteMessage", authMiddleware, deleteMessage);
 route.post(
   "/updateProfile",
   upload.single("profile"),

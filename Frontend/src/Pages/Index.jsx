@@ -6,15 +6,14 @@ const Index = () => {
   return (
     <>
       <div
-        className=" min-h-screen flex justify-center items-center gap-24"
+        className=" min-h-screen grid justify-items-center gap-10 p-20  sm:flex sm:justify-center sm:items-center sm:gap-24  overflow-auto"
         style={{
           backgroundImage: `url(${background})`,
           backgroundSize: "cover",
-          height: "100vh",
-          width: "100%",
+          backgroundPosition: "top",
         }}
       >
-        <div className="w-1/4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center">
+        <div className="w-full sm:w-1/4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 overflow-auto dark:border-gray-700 text-center">
           <i className="fa-solid fa-user text-9xl pt-5"></i>
           <div className="p-5">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -43,7 +42,7 @@ const Index = () => {
             </Link>
           </div>
         </div>
-        <div className="w-1/4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center">
+        <div className="w-full sm:w-1/4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 overflow-auto dark:border-gray-700 text-center">
           <i className="fa-solid fa-user-secret text-9xl pt-5"></i>
           <div className="p-5">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

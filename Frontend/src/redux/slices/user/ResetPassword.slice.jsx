@@ -31,7 +31,7 @@ export const sendOTP = createAsyncThunk("sendOTP", async (data) => {
 export const resetPassword = createAsyncThunk("resetPassword", async (data) => {
   try {
     const res = await axios.post(
-      "https://social-media-app-yog9.onrender.com/api/users/resetPassword",
+      "http:/https://social-media-app-yog9.onrender.com/api/users/resetPassword",
       data
     );
 
@@ -57,7 +57,7 @@ export const ResetPasswordSlice = createSlice({
       })
       .addCase(getOTP.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload.data ? action.payload.data : null;
+        state.data = action.payload.data;
       })
       .addCase(getOTP.rejected, (state, action) => {
         state.status = "failed";

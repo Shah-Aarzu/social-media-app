@@ -1,12 +1,14 @@
+import emptyProfile from "../utils/Image/empty-profile.avif";
+
 function Chat({ message }) {
   return (
     <>
-      <div className=" flex px-3 pt-3 gap-3 hover:bg-gray-100">
+      <div className=" flex px-3 pt-3 gap-3 hover:cursor-pointer hover:bg-gray-100">
         <div>
           <img
-            src={message.profile}
+            src={message.profile ? message.profile : emptyProfile}
             alt="image"
-            className=" bg-orange-500 w-14 h-14 rounded-full"
+            className=" bg-orange-500 w-14 h-12 rounded-full"
           />
         </div>
         <div className=" border-b-2 border-b-gray-100 w-full pb-3">

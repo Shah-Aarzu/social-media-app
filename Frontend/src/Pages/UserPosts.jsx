@@ -15,7 +15,7 @@ import { jwtDecode } from "jwt-decode";
 import LikesPopUpBox from "../Components/LikesPopUpBox";
 import { getLikes } from "../redux/slices/user/UserUtility.slice";
 
-const Home = () => {
+const UserPosts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { username } = useParams();
@@ -52,8 +52,8 @@ const Home = () => {
                 {likePopUpToggle && (
                   <LikesPopUpBox setLikePopUpToggle={setLikePopUpToggle} />
                 )}
-                <div className="bg-gray-100 min-h-screen bg-opacity-25 flex items-center justify-center">
-                  <ul className=" grid gap-5 py-5">
+                <div className="bg-gray-300 min-h-screen overflow-scroll bg-opacity-25 flex items-center justify-center">
+                  <ul className=" grid gap-5 p-5">
                     {userProfile.userProfile.userPosts.map((post) => {
                       return (
                         <li key={post._id}>
@@ -142,7 +142,7 @@ const Home = () => {
                                 <img
                                   src={post.image}
                                   alt="Post Image"
-                                  className="w-full h-96 object-cover rounded-md"
+                                  className="w-full h-40 sm:h-80 object-cover rounded-md"
                                 />
                               </div>
                             )}
@@ -251,4 +251,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UserPosts;

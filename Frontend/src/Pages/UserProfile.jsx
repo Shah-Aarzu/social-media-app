@@ -25,7 +25,9 @@ const UserProfile = () => {
     dispatch(
       getUsersProfile({ username, token: localStorage.getItem("userToken") })
     );
-  }, []);
+    setFollowerPopToggle(false);
+    setFollowingPopToggle(false);
+  }, [username]);
 
   const usersProfile = useSelector((state) => state.usersProfile);
 
@@ -60,7 +62,7 @@ const UserProfile = () => {
               </>
             )}
           </>
-          <div className="lg:w-8/12 lg:mx-auto mb-8">
+          <div className="lg:w-8/12 mx-auto mb-8">
             <header className="flex flex-wrap items-center p-4 md:py-8">
               <div className="md:w-3/12 md:ml-16">
                 <img
@@ -190,17 +192,17 @@ const UserProfile = () => {
                   }}
                   className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700"
                 >
-                  <a className="inline-block p-3">
+                  <a className="inline-block p-3 hover:cursor-pointer">
                     <i className="fas fa-th-large text-xl md:text-xs"></i>
                     <span className="hidden md:inline">post</span>
                   </a>
                 </li>
               </ul>
-              <div className="flex flex-wrap -mx-px md:-mx-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 -mx-px md:-mx-3">
                 {usersProfile.usersProfile.usersPosts.map((post) => {
                   return (
                     post.image && (
-                      <div key={post._id} className="w-1/3 p-px md:px-3">
+                      <div key={post._id} className=" p-px md:px-3">
                         <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
                           <img
                             className="w-full h-full absolute left-0 top-0 object-cover"

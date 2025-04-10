@@ -61,8 +61,8 @@ const Profile = () => {
                 )}
               </>
               <div className="lg:w-8/12 lg:mx-auto mb-8">
-                <header className="flex flex-wrap items-center p-4 md:py-8">
-                  <div className="md:w-3/12 md:ml-16">
+                <header className="flex justify-center flex-wrap items-center p-4 md:py-8">
+                  <div className=" md:w-3/12 md:ml-16">
                     <img
                       className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
                          border-2 border-pink-600 p-1"
@@ -99,7 +99,7 @@ const Profile = () => {
                       </span>
                     </div>
                     <div className="flex pb-3"></div>
-                    <ul className="hidden md:flex space-x-8 mb-4">
+                    <ul className=" md:flex space-x-8 mb-4">
                       <li>
                         <span className="font-semibold">
                           {userProfile.userProfile.userProfile.posts.length}
@@ -149,7 +149,7 @@ const Profile = () => {
                         </button>
                       </li>
                     </ul>
-                    <div className="hidden md:block">
+                    <div>
                       <h1 className="font-semibold">
                         {userProfile.userProfile.userProfile.fullname}
                       </h1>
@@ -173,7 +173,7 @@ const Profile = () => {
                     >
                       <a className="inline-block p-3">
                         <i className="fas fa-th-large text-xl md:text-xs"></i>
-                        <span className="hidden md:inline">post</span>
+                        <span className="">post</span>
                       </a>
                     </li>
                   </ul>
@@ -181,7 +181,10 @@ const Profile = () => {
                     {userProfile.userProfile.userPosts.map((post) => {
                       return (
                         post.image && (
-                          <div key={post._id} className="w-1/3 p-px md:px-3">
+                          <div
+                            key={post._id}
+                            className="w-full md:w-1/3 sm:w-2/4 p-px md:px-3"
+                          >
                             <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
                               <img
                                 className="w-full h-full absolute left-0 top-0 object-cover"

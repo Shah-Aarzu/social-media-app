@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMessages, getMessages } from "../redux/slices/user/Messages.slice";
 import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
+import emptyProfile from "../utils/Image/empty-profile.avif";
 
 function UserChat({ chats, username, receiverId }) {
   const socket = useSelector((state) => state.socket.socket);
@@ -18,12 +19,16 @@ function UserChat({ chats, username, receiverId }) {
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
   const bottomRef = useRef();
-  const [chat, setChat] = useState(chats.chats || []);
+  const [chat, setChat] = useState(chats.chats);
+  const [isUserOnline, setIsUserOnline] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView();
     }
+    setMessage("");
+    setIsTyping(false);
   }, [chat]);
 
   useEffect(() => {
@@ -45,8 +50,12 @@ function UserChat({ chats, username, receiverId }) {
   };
 
   useEffect(() => {
-    const handleNewMessage = (newMessage) => {
-      setChat((prev) => [...prev, newMessage]);
+    if (!socket) return;
+    const handleNewMessage = (res) => {
+      if (res?.id === chats?.id) {
+        setChat((prev) => [...prev, res.newMessage]);
+      }
+      return;
     };
 
     socket.on("newMessage", handleNewMessage);
@@ -54,7 +63,62 @@ function UserChat({ chats, username, receiverId }) {
     return () => {
       socket.off("newMessage", handleNewMessage);
     };
-  }, []);
+  }, [socket, chats?.id]);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleDeleteMessage = async ({ messageId }) => {
+      await setChat((prev) => prev.filter((msg) => msg._id !== messageId));
+    };
+
+    socket.on("sendDeleteMessageId", handleDeleteMessage);
+
+    return () => {
+      socket.off("sendDeleteMessageId", handleDeleteMessage);
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (!chats?.id) return;
+
+    socket.emit("isUserOnline", chats.id);
+  }, [chats.id]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleUserTyping = (res) => {
+      if (res.userId === chats.id) setIsTyping(res.flag);
+
+      return;
+    };
+    const handleHideTyping = (res) => {
+      if (res.userId === chats.id) setIsTyping(res.flag);
+
+      return;
+    };
+
+    const handleUserOnline = (res) => {
+      if (res.id === chats.id) setIsUserOnline(res.flag);
+      return;
+    };
+
+    socket.on("userTyping", handleUserTyping);
+    socket.on("hideTyping", handleHideTyping);
+    socket.on("userisOnline", handleUserOnline);
+
+    return () => {
+      socket.off("userTyping", handleUserTyping);
+      socket.off("hideTyping", handleHideTyping);
+      socket.off("userisOnline", handleUserOnline);
+    };
+  }, [socket, chats?.id]);
+
+  useEffect(() => {
+    if (message === "") {
+      socket.emit("stopTyping", chats.id);
+    } else socket.emit("userisTyping", chats.id);
+  }, [socket, message]);
 
   return (
     <>
@@ -63,13 +127,24 @@ function UserChat({ chats, username, receiverId }) {
           <div className=" flex justify-between items-center bg-gray-100 absolute top-0 w-full p-3">
             <div className=" flex items-center gap-5">
               <img
-                src={chats.profile}
+                src={chats.profile ? chats.profile : emptyProfile}
                 alt="image"
                 className=" bg-orange-500 w-12 h-12 rounded-full"
               />
-              <p>{chats.fullname}</p>
+              <div>
+                <p>{chats.fullname}</p>
+                {isUserOnline ? (
+                  isTyping ? (
+                    <p>typing...</p>
+                  ) : (
+                    <p>online</p>
+                  )
+                ) : (
+                  <p>offline</p>
+                )}
+              </div>
             </div>
-            <div className=" flex gap-5">
+            {/* <div className=" flex gap-5">
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
                 className="px-5 text-2xl text-slate-500"
@@ -78,7 +153,7 @@ function UserChat({ chats, username, receiverId }) {
                 icon={faEllipsisVertical}
                 className=" text-2xl text-slate-500"
               />
-            </div>
+            </div> */}
           </div>
         </header>
         <main>
@@ -87,9 +162,17 @@ function UserChat({ chats, username, receiverId }) {
               <>
                 {chat.map((chat) =>
                   chat.username === username ? (
-                    <MessageFromUser key={nanoid()} chat={chat} />
+                    <MessageFromUser
+                      key={nanoid()}
+                      chat={chat}
+                      username={chats.username}
+                    />
                   ) : (
-                    <MessageToUser key={nanoid()} chat={chat} />
+                    <MessageToUser
+                      key={nanoid()}
+                      chat={chat}
+                      username={chats.username}
+                    />
                   )
                 )}
                 <div ref={bottomRef}></div>
@@ -104,10 +187,10 @@ function UserChat({ chats, username, receiverId }) {
         <footer>
           <form onSubmit={sendMessage}>
             <div className=" bg-gray-100 p-3 flex gap-5 items-center absolute bottom-0 w-full">
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faPlus}
                 className=" text-2xl text-slate-500"
-              />
+              /> */}
               <input
                 type="text"
                 placeholder="Type a message"

@@ -2,9 +2,11 @@ import { ImCross } from "react-icons/im";
 import { useSelector } from "react-redux";
 import emptyProfile from "../utils/Image/empty-profile.avif";
 import bluetick from "../utils/Image/verify.png";
+import { useNavigate } from "react-router-dom";
 
 function FollowingPopUpBox({ setFollowingPopToggle }) {
   const following = useSelector((state) => state.userUtility);
+  const navigate = useNavigate();
 
   const submitHandler = () => {
     setFollowingPopToggle(false);
@@ -34,12 +36,12 @@ function FollowingPopUpBox({ setFollowingPopToggle }) {
           }}
         >
           {following.status == "loading" && (
-            <div className="h-full w-96 flex justify-center items-center text-white">
+            <div className="h-full w-80 flex justify-center items-center text-white">
               Loading...
             </div>
           )}
           {following.status == "failed" && (
-            <div className="h-full w-96 flex justify-center items-center text-white">
+            <div className="h-full w-80 flex justify-center items-center text-white">
               Check Your Internet Connection !!!
             </div>
           )}
@@ -47,7 +49,10 @@ function FollowingPopUpBox({ setFollowingPopToggle }) {
             following.userUtilityData.map((following, index) => (
               <div
                 key={index}
-                className="flex justify-between px-3 py-1 bg-gray-100 items-center gap-1 rounded-lg border border-gray-100 my-3"
+                onClick={() => {
+                  navigate(`/user/${following.username}`);
+                }}
+                className="flex w-80 hover:cursor-pointer justify-between px-3 py-1 bg-gray-100 items-center gap-1 rounded-lg border border-gray-100 my-3"
               >
                 <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
@@ -71,9 +76,11 @@ function FollowingPopUpBox({ setFollowingPopToggle }) {
                       )}
                     </span>
                   </p>
-                  <p>{following.fullname ? following.fullname : ""}</p>
                 </div>
                 <div>
+                  <p>{following.fullname ? following.fullname : ""}</p>
+                </div>
+                {/* <div>
                   <input
                     type="button"
                     value="Following"
@@ -81,11 +88,11 @@ function FollowingPopUpBox({ setFollowingPopToggle }) {
                             text-white font-semibold text-sm rounded block text-center 
                             sm:inline-block"
                   />
-                </div>
+                </div> */}
               </div>
             ))
           ) : (
-            <div className="h-full w-96 flex justify-center items-center text-white">
+            <div className="h-full w-80 flex justify-center items-center text-white">
               No Followings !!
             </div>
           )}
